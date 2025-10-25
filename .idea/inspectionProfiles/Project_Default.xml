@@ -1,0 +1,33 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <list>
+          <option value="Django" />
+          <option value="psycopg2-binary" />
+          <option value="asgiref" />
+          <option value="contourpy" />
+          <option value="cycler" />
+          <option value="fonttools" />
+          <option value="iniconfig" />
+          <option value="kiwisolver" />
+          <option value="matplotlib" />
+          <option value="numpy" />
+          <option value="packaging" />
+          <option value="pillow" />
+          <option value="pluggy" />
+          <option value="pycryptodome" />
+          <option value="Pygments" />
+          <option value="pyparsing" />
+          <option value="pytest" />
+          <option value="python-dateutil" />
+          <option value="pytz" />
+          <option value="scipy" />
+          <option value="six" />
+          <option value="sqlparse" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
