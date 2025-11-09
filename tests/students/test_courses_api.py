@@ -20,8 +20,22 @@ def course_factory():
     return factory
 
 @pytest.mark.django_db
+def test_get_first_course(client, course_factory, user):
+    course = course_factory(_quantity=1)[0]
+
+    response = client.get(f"/api/v1/courses/{course.id}/")
+    data = response.json()
+
+    assert response.status_code == 200
+    assert data["name"] == course.name
+
+
+@pytest.mark.django_db
 def test_create_first_course(client, course_factory, user):
-    response = client.post("/api/v1/courses/", data={"name": "Python course" })
+    course = course_factory(_quantity=10)
+
+    response = client.post("/api/v1/courses/", data={"name": "Python course"})
+
     assert response.status_code == 201
     assert response.data["name"] == "Python course"
 
@@ -56,8 +70,9 @@ def test_post_courses(client, user):
 @pytest.mark.django_db
 def test_filter_id_courses(client, user, course_factory):
     courses = course_factory(_quantity=10)
+    target_course = courses[0]
 
-    response = client.get("/api/v1/courses/?id=1")
+    response = client.get("/api/v1/courses/", data={"id": target_course.id})
     data = response.json()
 
     assert len(data) == 1
@@ -66,16 +81,19 @@ def test_filter_id_courses(client, user, course_factory):
     for i, course in enumerate(data):
         assert course["id"] == courses[i].id
 
+
 @pytest.mark.django_db
 def test_filter_name_courses(client, user, course_factory):
-    course_factory(name="Python course")
+    courses = course_factory(name="Python course")
+    course_factory(name="Java course")
+    target_name = courses
 
-    response = client.get("/api/v1/courses/?name=Python course")
+    response = client.get("/api/v1/courses/", data={"name": target_name.name})
     data = response.json()
 
     assert len(data) == 1
     assert response.status_code == 200
-    assert data[0]["name"] == "Python course"
+    assert data[0]["name"] == target_name.name
 
 @pytest.mark.django_db
 def test_update_courses(client, user, course_factory):
